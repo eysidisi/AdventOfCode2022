@@ -33,7 +33,7 @@ namespace AdventOfCode2022Tests.Day1
         }
 
         [Fact]
-        public void ExeciseSolution()
+        public void ExerciseSolution()
         {
             // Arrange
             string filePath = @"TestFiles/ExerciseInput.txt";

@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using Xunit.Abstractions;
 
-namespace AdventOfCode2022Tests.Day1
+namespace AdventOfCode2022Tests.Day01
 {
     public class Part2
     {
@@ -36,7 +36,7 @@ namespace AdventOfCode2022Tests.Day1
         public void ExerciseSolution()
         {
             // Arrange
-            string filePath = @"TestFiles/ExerciseInput.txt";
+            string filePath = @"TestFiles/Day01/ExerciseInput.txt";
             TextFileCalorieReader textCalorieReader = new(filePath);
             ElfGroup elfGroup = new();
             elfGroup.AddElfCaloriesUsingDataSource(textCalorieReader);

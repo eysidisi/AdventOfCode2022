@@ -28,19 +28,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestFiles\ExerciseInput.txt">
+    <None Update="TestFiles\Day01\ExerciseInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestFiles\ThreeElvesWithDifferentNumberOfMeals.txt">
+    <None Update="TestFiles\Day01\ThreeElvesWithDifferentNumberOfMeals.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestFiles\TwoElvesTwoMeals.txt">
+    <None Update="TestFiles\Day01\TwoElvesTwoMeals.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestFiles\OneElfTwoMeals.txt">
+    <None Update="TestFiles\Day01\OneElfTwoMeals.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestFiles\OneElfOneMeal.txt">
+    <None Update="TestFiles\Day01\OneElfOneMeal.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\Day02\Part1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\Day02\ThreeRounds.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

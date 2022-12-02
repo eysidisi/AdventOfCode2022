@@ -3,7 +3,7 @@ using Moq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace AdventOfCode2022Tests.Day1
+namespace AdventOfCode2022Tests.Day01
 {
     public class Part1
     {
@@ -71,7 +71,7 @@ namespace AdventOfCode2022Tests.Day1
         public void ReadTextFileWithOneMeal()
         {
             // Arrange
-            string filePath = @"TestFiles/OneElfOneMeal.txt";
+            string filePath = @"TestFiles/Day01/OneElfOneMeal.txt";
             TextFileCalorieReader textCalorieReader = new(filePath);
 
             // Act
@@ -86,7 +86,7 @@ namespace AdventOfCode2022Tests.Day1
         public void ReadTextfileWithTwoMeals()
         {
             // Arrange
-            string filePath = @"TestFiles/OneElfTwoMeals.txt";
+            string filePath = @"TestFiles/Day01/OneElfTwoMeals.txt";
             TextFileCalorieReader textCalorieReader = new(filePath);
 
             // Act
@@ -101,7 +101,7 @@ namespace AdventOfCode2022Tests.Day1
         public void ReadTextFileWithTwoElvesWithTwoMeals()
         {
             // Arrange
-            string filePath = @"TestFiles/TwoElvesTwoMeals.txt";
+            string filePath = @"TestFiles/Day01/TwoElvesTwoMeals.txt";
             TextFileCalorieReader textCalorieReader = new(filePath);
 
             // Act
@@ -113,8 +113,8 @@ namespace AdventOfCode2022Tests.Day1
         }
 
         [Theory]
-        [InlineData(@"TestFiles/ThreeElvesWithDifferentNumberOfMeals.txt", 1900)]
-        [InlineData(@"TestFiles/TwoElvesTwoMeals.txt", 700)]
+        [InlineData(@"TestFiles/Day01/ThreeElvesWithDifferentNumberOfMeals.txt", 1900)]
+        [InlineData(@"TestFiles/Day01/TwoElvesTwoMeals.txt", 700)]
         public void ReadTextFileAndGetTheIndexWithMaxCalories(string filePath, int expectedMaxCalories)
         {
             // Arrange
@@ -133,7 +133,7 @@ namespace AdventOfCode2022Tests.Day1
         public void ExerciseAnswer()
         {
             // Arrange
-            string filePath = @"TestFiles/ExerciseInput.txt";
+            string filePath = @"TestFiles/Day01/ExerciseInput.txt";
             TextFileCalorieReader textCalorieReader = new(filePath);
             ElfGroup elfGroup = new();
             elfGroup.AddElfCaloriesUsingDataSource(textCalorieReader);

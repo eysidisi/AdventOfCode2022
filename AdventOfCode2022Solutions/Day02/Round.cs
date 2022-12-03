@@ -15,6 +15,23 @@
             this.elfsShape = elfsShape;
         }
 
+        public Round(string roundText)
+        {
+            string[] parsedInput = roundText.Split(' ');
+            elfsShape = Shape.CreateShapeUsingString(parsedInput[0]);
+            SelectMyShapeUsingKey(parsedInput[1]);
+        }
+
+        private void SelectMyShapeUsingKey(string key)
+        {
+            if (key.ToLower() == "x")
+                myShape = elfsShape.GetLosingShape();
+            else if (key.ToLower() == "y")
+                myShape = elfsShape;
+            else
+                myShape = elfsShape.GetWinningShape();
+        }
+
         public int GetScore()
         {
             int totalScore;

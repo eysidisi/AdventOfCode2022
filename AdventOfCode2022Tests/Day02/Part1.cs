@@ -14,7 +14,6 @@ namespace AdventOfCode2022Tests.Day02
             this.output = output;
         }
 
-
         [Fact]
         public void RockBeatsScissors()
         {
@@ -195,7 +194,7 @@ namespace AdventOfCode2022Tests.Day02
         public void TextDataSourceReadsRoundInfo()
         {
             string filePath = @"TestFiles/Day02/ThreeRounds.txt";
-            ITournamentDataSource fileDataSource = new FileDataSource(filePath);
+            ITournamentDataSource fileDataSource = new Part1DataSource(filePath);
 
             List<Round> expectedRounds = new() {
             new(Shape.Rock(), Shape.Rock()),
@@ -212,7 +211,7 @@ namespace AdventOfCode2022Tests.Day02
         public void TournamentReadsRoundsFromFile()
         {
             string filePath = @"TestFiles/Day02/ThreeRounds.txt";
-            ITournamentDataSource fileDataSource = new FileDataSource(filePath);
+            ITournamentDataSource fileDataSource = new Part1DataSource(filePath);
             Tournament tournament = new(fileDataSource);
             int expectedScore = 3 * 3 + 1 + 2 + 3;
 
@@ -224,8 +223,8 @@ namespace AdventOfCode2022Tests.Day02
         [Fact]
         public void ExerciseSolution()
         {
-            string filePath = @"TestFiles/Day02/Part1.txt";
-            ITournamentDataSource fileDataSource = new FileDataSource(filePath);
+            string filePath = @"TestFiles/Day02/ExerciseInput.txt";
+            ITournamentDataSource fileDataSource = new Part1DataSource(filePath);
             Tournament tournament = new(fileDataSource);
 
             int actualScore = tournament.GetTotalScore();

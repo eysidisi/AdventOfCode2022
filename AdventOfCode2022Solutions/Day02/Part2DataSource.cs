@@ -1,10 +1,10 @@
 ﻿namespace AdventOfCode2022Tests.Day02
 {
-    public class FileDataSource : ITournamentDataSource
+    public class Part2DataSource : ITournamentDataSource
     {
         private string filePath;
 
-        public FileDataSource(string filePath)
+        public Part2DataSource(string filePath)
         {
             this.filePath = filePath;
         }
@@ -13,13 +13,10 @@
         {
             string[] roundLines = File.ReadAllLines(filePath);
             List<Round> rounds = new();
+
             foreach (string roundLine in roundLines)
             {
-                string[] shapeStrings = roundLine.Split(' ');
-                Shape myShapeString = Shape.CreateShapeUsingString(shapeStrings[1]);
-                Shape elfsShapeString = Shape.CreateShapeUsingString(shapeStrings[0]);
-
-                rounds.Add(new Round(myShapeString, elfsShapeString));
+                rounds.Add(new Round(roundLine));
             }
 
             return rounds;

@@ -3,12 +3,14 @@
     public class Shape
     {
         ShapeType shapeType;
+        ShapeType winningShape;
         int score;
 
-        private Shape(ShapeType shapeType, int score)
+        private Shape(ShapeType shapeType, int score, ShapeType winningShape)
         {
             this.shapeType = shapeType;
             this.score = score;
+            this.winningShape = winningShape;
         }
 
         public static Shape CreateShapeUsingString(string value)
@@ -26,24 +28,22 @@
 
         public static Shape Paper()
         {
-            return new Shape(ShapeType.Paper, 2);
+            return new Shape(ShapeType.Paper, 2, ShapeType.Scissors);
         }
 
         public static Shape Rock()
         {
-            return new Shape(ShapeType.Rock, 1);
+            return new Shape(ShapeType.Rock, 1, ShapeType.Paper);
         }
 
         public static Shape Scissors()
         {
-            return new Shape(ShapeType.Scissors, 3);
+            return new Shape(ShapeType.Scissors, 3, ShapeType.Rock);
         }
 
         public bool Beats(Shape opponentShape)
         {
-            return (this.shapeType == ShapeType.Rock && opponentShape.shapeType == ShapeType.Scissors) ||
-                    (this.shapeType == ShapeType.Paper && opponentShape.shapeType == ShapeType.Rock) ||
-                    (this.shapeType == ShapeType.Scissors && opponentShape.shapeType == ShapeType.Paper);
+            return (this.shapeType == opponentShape.winningShape);
         }
 
         public int Score()
@@ -67,6 +67,26 @@
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public Shape GetWinningShape()
+        {
+            switch (winningShape)
+            {
+                case ShapeType.Rock:
+                    return Rock();
+                case ShapeType.Scissors:
+                    return Scissors();
+                case ShapeType.Paper:
+                    return Paper();
+                default:
+                    throw new InvalidDataException();
+            }
+        }
+
+        public Shape GetLosingShape()
+        {
+            return GetWinningShape().GetWinningShape();
         }
     }
 }

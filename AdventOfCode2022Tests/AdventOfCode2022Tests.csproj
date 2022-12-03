@@ -43,7 +43,7 @@
     <None Update="TestFiles\Day01\OneElfOneMeal.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestFiles\Day02\Part1.txt">
+    <None Update="TestFiles\Day02\ExerciseInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestFiles\Day02\ThreeRounds.txt">

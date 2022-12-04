@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2022Tests
+﻿namespace AdventOfCode2022Tests.Day01
 {
     public class ElfGroup
     {

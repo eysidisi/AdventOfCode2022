@@ -5,4 +5,3 @@
         int CalculatePriority(char item);
     }
 }
-;

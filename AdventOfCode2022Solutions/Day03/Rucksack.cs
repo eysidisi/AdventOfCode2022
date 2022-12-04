@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode2022Tests.Day03
 {
-    internal class Rucksack
+    public class Rucksack
     {
         private string items;
         private IItemPriorityCalculator itemPriorityCalculator;
@@ -22,7 +22,7 @@
             this.itemPriorityCalculator = itemPriorityCalculator;
         }
 
-        internal string FindCommonItems()
+        public string FindCommonItems()
         {
             HashSet<char> items = new();
 

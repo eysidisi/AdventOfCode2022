@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode2022Tests.Day03
 {
-    internal class DefaultPriorityCalculator : IItemPriorityCalculator
+    public class DefaultPriorityCalculator : IItemPriorityCalculator
     {
         const int StartingValueForLowerCase = 1;
         const int StartingValueForUpperCase = 27;

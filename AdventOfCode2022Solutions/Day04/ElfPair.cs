@@ -11,7 +11,7 @@
             this.elf2 = elf2;
         }
 
-        public bool DoElvesContainEachOther()
+        public bool DoRangesContainEachOther()
         {
             // Find elf with largest range
             Elf elfWithLargestRange = elf1.TotalRange > elf2.TotalRange ? elf1 : elf2;
@@ -21,6 +21,13 @@
                 elfWithLargestRange.rangeMaxPoint >= elf1.rangeMaxPoint &&
                 elfWithLargestRange.rangeMaxPoint >= elf2.rangeMaxPoint;
 
+        }
+
+        public bool DoRangesOverlap()
+        {
+            return DoRangesContainEachOther() ||
+                (elf1.rangeMinPoint >= elf2.rangeMinPoint && elf1.rangeMinPoint <= elf2.rangeMaxPoint) ||
+                (elf1.rangeMaxPoint >= elf2.rangeMinPoint && elf1.rangeMaxPoint <= elf2.rangeMaxPoint);
         }
     }
 }

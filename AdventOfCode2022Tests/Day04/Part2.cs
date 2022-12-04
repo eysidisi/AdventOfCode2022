@@ -3,38 +3,30 @@ using Xunit.Abstractions;
 
 namespace AdventOfCode2022Tests.Day04
 {
-    public class Part1
+    public class Part2
     {
         private readonly ITestOutputHelper output;
 
-        public Part1(ITestOutputHelper output)
+        public Part2(ITestOutputHelper output)
         {
             this.output = output;
         }
 
-        [Fact]
-        public void ElfHasRange()
-        {
-            string range = "2-4";
-            Elf elf = new(range);
-            Assert.Equal(2, elf.rangeMinPoint);
-            Assert.Equal(4, elf.rangeMaxPoint);
-        }
-
         [Theory]
-        [InlineData("2-4", "5-6", false)]
-        [InlineData("2-4", "4-5", false)]
-        [InlineData("2-4", "3-5", false)]
         [InlineData("2-4", "2-4", true)]
-        [InlineData("1-4", "2-4", true)]
-        [InlineData("1-4", "2-3", true)]
-        public void ElfPairChecksIfFullyContainedRangePresents(string elfRange1, string elfRange2, bool expectedResult)
+        [InlineData("2-4", "4-5", true)]
+        [InlineData("2-4", "3-5", true)]
+        [InlineData("2-4", "5-7", false)]
+        [InlineData("4-5", "2-4", true)]
+        [InlineData("3-5", "2-4", true)]
+        [InlineData("5-7", "2-4", false)]
+        public void ElfPairChecksIfRangesOverlap(string elfRange1, string elfRange2, bool expectedResult)
         {
             Elf elf1 = new(elfRange1);
             Elf elf2 = new(elfRange2);
             ElfPair elfPair = new(elf1, elf2);
 
-            Assert.Equal(expectedResult, elfPair.DoRangesContainEachOther());
+            Assert.Equal(expectedResult, elfPair.DoRangesOverlap());
         }
 
         [Fact]
@@ -52,15 +44,15 @@ namespace AdventOfCode2022Tests.Day04
 
                 elfPairs.Add(new ElfPair(elf1, elf2));
             }
-
-            int numOfContainedPairs = 0;
+            int expectedNumOfOverlappingPairs = 4;
+            int actualNumOfOverlappingPairs = 0;
             foreach (ElfPair elfPair in elfPairs)
             {
-                if (elfPair.DoRangesContainEachOther())
-                    numOfContainedPairs++;
+                if (elfPair.DoRangesOverlap())
+                    actualNumOfOverlappingPairs++;
             }
 
-            output.WriteLine(numOfContainedPairs.ToString());
+            Assert.Equal(expectedNumOfOverlappingPairs, actualNumOfOverlappingPairs);
         }
 
         [Fact]
@@ -79,14 +71,14 @@ namespace AdventOfCode2022Tests.Day04
                 elfPairs.Add(new ElfPair(elf1, elf2));
             }
 
-            int numOfContainedPairs = 0;
+            int actualNumOfOverlappingPairs = 0;
             foreach (ElfPair elfPair in elfPairs)
             {
-                if (elfPair.DoRangesContainEachOther())
-                    numOfContainedPairs++;
+                if (elfPair.DoRangesOverlap())
+                    actualNumOfOverlappingPairs++;
             }
 
-            output.WriteLine(numOfContainedPairs.ToString());
+            output.WriteLine(actualNumOfOverlappingPairs.ToString());
         }
 
     }

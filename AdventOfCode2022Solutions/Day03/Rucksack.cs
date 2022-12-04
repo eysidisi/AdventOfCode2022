@@ -53,5 +53,17 @@
 
             return totalPriority;
         }
+
+        public HashSet<char> FindUniqueItems()
+        {
+            HashSet<char> uniqueItems = new();
+
+            foreach (char item in items)
+            {
+                if (uniqueItems.Contains(item) == false)
+                    uniqueItems.Add(item);
+            }
+            return uniqueItems;
+        }
     }
 }

@@ -39,7 +39,58 @@ namespace AdventOfCode2022Tests.Day05
             }
         }
 
-        public void MoveCrates()
+        public void MoveCrates9001()
+        {
+            List<string> commandLines = GetCommandLines();
+
+            foreach (string command in commandLines)
+            {
+                ProcessCommand9001(command);
+            }
+        }
+
+        private void ProcessCommand9001(string command)
+        {
+            int numberOfCratesToMove;
+            Stack fromStack, toStack;
+            ExtractCommand(command, out numberOfCratesToMove, out fromStack, out toStack);
+
+            Stack<char> tempStack = new();
+
+            while (numberOfCratesToMove > 0)
+            {
+                char crate = fromStack.RemoveCrate();
+                tempStack.Push(crate);
+                numberOfCratesToMove--;
+            }
+
+            while (tempStack.Count != 0)
+            {
+                char crate = tempStack.Pop();
+                toStack.AddCreate(crate);
+            }
+        }
+
+        private void ExtractCommand(string command, out int numberOfCratesToMove, out Stack fromStack, out Stack toStack)
+        {
+            numberOfCratesToMove = int.Parse(command.Split(' ')[1]);
+            int fromStackIndex = int.Parse(command.Split(' ')[3]) - 1;
+            int toStackIndex = int.Parse(command.Split(' ')[5]) - 1;
+            fromStack = stacks.ElementAt(fromStackIndex);
+            toStack = stacks.ElementAt(toStackIndex);
+        }
+
+        public void MoveCrates9000()
+        {
+            List<string> commandLines = GetCommandLines();
+
+            foreach (string command in commandLines)
+            {
+                ProcessCommand9000(command);
+            }
+        }
+
+        private List<string> GetCommandLines()
         {
             string[] lines = File.ReadAllLines(filePath);
             List<string> commandLines = new();
@@ -52,20 +103,14 @@ namespace AdventOfCode2022Tests.Day05
                 }
             }
 
-            foreach (string command in commandLines)
-            {
-                ProcessCommand(command);
-            }
+            return commandLines;
         }
 
-        private void ProcessCommand(string command)
+        private void ProcessCommand9000(string command)
         {
-            int numberOfCratesToMove = int.Parse(command.Split(' ')[1]);
-            int fromStackIndex = int.Parse(command.Split(' ')[3]) - 1;
-            int toStackIndex = int.Parse(command.Split(' ')[5]) - 1;
-            Stack fromStack = stacks.ElementAt(fromStackIndex);
-            Stack toStack = stacks.ElementAt(toStackIndex);
-
+            int numberOfCratesToMove;
+            Stack fromStack, toStack;
+            ExtractCommand(command, out numberOfCratesToMove, out fromStack, out toStack);
             fromStack.MoveCratesToOtherStack(numberOfCratesToMove, toStack);
         }
 

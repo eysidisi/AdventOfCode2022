@@ -37,5 +37,10 @@ namespace AdventOfCode2022Tests.Day05
         {
             return new ReadOnlyCollection<char>(crates.ToList());
         }
+
+        internal char RemoveCrate()
+        {
+            return crates.Pop();
+        }
     }
 }

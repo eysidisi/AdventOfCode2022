@@ -101,7 +101,7 @@ namespace AdventOfCode2022Tests.Day05
 
             cargo.CreateStacks();
 
-            cargo.MoveCrates();
+            cargo.MoveCrates9000();
 
             ReadOnlyCollection<Stack> actualStacks = cargo.Stacks();
 
@@ -120,7 +120,7 @@ namespace AdventOfCode2022Tests.Day05
 
             cargo.CreateStacks();
 
-            cargo.MoveCrates();
+            cargo.MoveCrates9000();
 
             string expectedTopCrates = "CMZ";
 
@@ -138,7 +138,7 @@ namespace AdventOfCode2022Tests.Day05
 
             cargo.CreateStacks();
 
-            cargo.MoveCrates();
+            cargo.MoveCrates9000();
 
             string expectedTopCrates = "WCZTHTMPS";
 

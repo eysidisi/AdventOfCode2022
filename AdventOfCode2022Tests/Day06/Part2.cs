@@ -28,7 +28,7 @@ namespace AdventOfCode2022Tests.Day06
 
             Device device = new(lines[0]);
 
-            Assert.Equal(1623, device.FindStartOfMessageMarker());
+            Assert.Equal(3774, device.FindStartOfMessageMarker());
 
         }
     }

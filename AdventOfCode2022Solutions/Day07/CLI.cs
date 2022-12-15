@@ -2,6 +2,10 @@
 {
     public class CLI
     {
+        const int totalCapacity = 70000000;
+
+        const int requiredCapacityForUpdate = 30000000;
+
         public ElfDirectory CurrentDirectory => directoryStack.Peek();
 
         private Stack<ElfDirectory> directoryStack = new();
@@ -89,6 +93,34 @@
             string fileName = command.Split(" ")[1];
 
             CurrentDirectory.TryToAddFile(fileName, fileSize);
+        }
+
+        public int FindSmallestSizeToDeleteForUpdate()
+        {
+            int minCapacityToDelete = requiredCapacityForUpdate - (totalCapacity - rootDirectory.TotalSize);
+
+            return FindSmallestDirectoryWithAtLeastCapacity(minCapacityToDelete).TotalSize;
+        }
+
+        private ElfDirectory FindSmallestDirectoryWithAtLeastCapacity(int capacityToDelete)
+        {
+            Queue<ElfDirectory> elfDirectoryQueue = new();
+            elfDirectoryQueue.Enqueue(rootDirectory);
+            ElfDirectory directoryToDelete = rootDirectory;
+
+            while (elfDirectoryQueue.Count > 0)
+            {
+                ElfDirectory currentDirectory = elfDirectoryQueue.Dequeue();
+
+                if (currentDirectory.TotalSize >= capacityToDelete &&
+                    currentDirectory.TotalSize < directoryToDelete.TotalSize)
+                    directoryToDelete = currentDirectory;
+
+                currentDirectory.SubDirectories.ToList().
+                    ForEach(x => { elfDirectoryQueue.Enqueue(x); });
+            }
+
+            return directoryToDelete;
         }
     }
 }

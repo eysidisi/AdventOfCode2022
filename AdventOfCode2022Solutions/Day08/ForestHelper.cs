@@ -87,6 +87,40 @@
 
             return result.ToArray();
         }
+
+        public static int FindNumberOfTreesSeenOnLeft(int treeIndex, int[] treeArr)
+        {
+            int treeHeight = treeArr[treeIndex];
+
+            int numberOfTreesSeen = 0;
+
+            for (int i = treeIndex - 1; 0 <= i; i--)
+            {
+                numberOfTreesSeen++;
+
+                if (treeArr[i] >= treeHeight)
+                    break;
+            }
+
+            return numberOfTreesSeen;
+        }
+
+        public static int FindNumberOfTreesSeenOnRight(int treeIndex, int[] treeArr)
+        {
+            int treeHeight = treeArr[treeIndex];
+
+            int numberOfTreesSeen = 0;
+
+            for (int i = treeIndex + 1; i < treeArr.Length; i++)
+            {
+                numberOfTreesSeen++;
+
+                if (treeArr[i] >= treeHeight)
+                    break;
+            }
+
+            return numberOfTreesSeen;
+        }
     }
 
 }

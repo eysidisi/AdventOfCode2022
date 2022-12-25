@@ -17,13 +17,11 @@
 
             while (distance != 0)
             {
-                Position headOldPos = HeadPos;
-
                 MoveHead(direction, 1);
 
                 if (DoesTailTouchHead() == false)
                 {
-                    MoveTail(headOldPos);
+                    MoveTail();
                     UpdateVisitedPositions();
                 }
 
@@ -39,9 +37,36 @@
             }
         }
 
-        private void MoveTail(Position headOldPos)
+        private void MoveTail()
         {
-            TailPos = new Position(headOldPos.X, headOldPos.Y);
+            int distanceToMoveInY = (HeadPos.Y - TailPos.Y) > 0 ? 1 : -1;
+            int distanceToMoveInX = (HeadPos.X - TailPos.X) > 0 ? 1 : -1;
+
+            if (AreTailHeadInTheSameRow())
+            {
+                TailPos = new Position(TailPos.X, TailPos.Y + distanceToMoveInY);
+            }
+
+            else if (AreTailHeadInTheSameCol())
+            {
+                TailPos = new Position(TailPos.X + distanceToMoveInX, TailPos.Y);
+            }
+
+            else
+            {
+                TailPos = new Position(TailPos.X, TailPos.Y + distanceToMoveInY);
+                TailPos = new Position(TailPos.X + distanceToMoveInX, TailPos.Y);
+            }
+        }
+
+        private bool AreTailHeadInTheSameCol()
+        {
+            return HeadPos.Y - TailPos.Y == 0;
+        }
+
+        private bool AreTailHeadInTheSameRow()
+        {
+            return HeadPos.X - TailPos.X == 0;
         }
 
         public int NumberOfPositionsTailVisited()

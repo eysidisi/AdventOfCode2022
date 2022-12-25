@@ -72,7 +72,7 @@ namespace AdventOfCode2022Tests.Day09
                 rope.MoveHead(item);
             }
 
-            int expectedNumOfPositionsVisited = 5878;
+            int expectedNumOfPositionsVisited = 2405;
 
             Assert.Equal(expectedNumOfPositionsVisited, rope.NumberOfPositionsTailVisited());
         }

@@ -58,11 +58,11 @@ namespace AdventOfCode2022Tests.Day11
             monkey.AddItem(2);
             monkey.AddItem(3);
             Item thrownItem = monkey.Throw();
-            Assert.Equal(7, thrownItem.Value);
-            Assert.Equal(1, thrownItem.MonkeyToThrow);
+            Assert.Equal(2, thrownItem.Value);
+            Assert.Equal(2, thrownItem.MonkeyToThrow);
 
             thrownItem = monkey.Throw();
-            Assert.Equal(8, thrownItem.Value);
+            Assert.Equal(2, thrownItem.Value);
             Assert.Equal(2, thrownItem.MonkeyToThrow);
         }
 
@@ -79,12 +79,12 @@ namespace AdventOfCode2022Tests.Day11
             monkey.AddItem(2);
             monkey.AddItem(3);
             Item thrownItem = monkey.Throw();
-            Assert.Equal(8, thrownItem.Value);
+            Assert.Equal(2, thrownItem.Value);
             Assert.Equal(3, thrownItem.MonkeyToThrow);
 
             thrownItem = monkey.Throw();
-            Assert.Equal(12, thrownItem.Value);
-            Assert.Equal(0, thrownItem.MonkeyToThrow);
+            Assert.Equal(4, thrownItem.Value);
+            Assert.Equal(3, thrownItem.MonkeyToThrow);
         }
 
         [Fact]
@@ -149,10 +149,10 @@ namespace AdventOfCode2022Tests.Day11
 
             Item[] expectedItems = new[]
             {
-                new Item(39,6),
-                new Item(26,6),
                 new Item(13,6),
-                new Item(65,1),
+                new Item(8,6),
+                new Item(4,6),
+                new Item(21,6),
             };
 
             int startingNumberOfItems = monkey.ItemValues.Count();
@@ -178,7 +178,7 @@ namespace AdventOfCode2022Tests.Day11
                 monkeys.Add(Monkey.Create(line));
             }
 
-            Assert.Equal(7, monkeys.Count);
+            Assert.Equal(8, monkeys.Count);
         }
 
         [Fact]
@@ -212,7 +212,7 @@ namespace AdventOfCode2022Tests.Day11
             Round round = new(new List<Monkey>() { monkey1, monkey2, monkey3 });
             round.Turn();
 
-            Assert.Equal(6, monkey1.ItemValues.Count);
+            Assert.Equal(1, monkey1.ItemValues.Count);
         }
 
         [Fact]
@@ -248,7 +248,7 @@ namespace AdventOfCode2022Tests.Day11
 
             Assert.Equal(2, monkey1.NumberOfInspectedItems);
             Assert.Equal(3, monkey2.NumberOfInspectedItems);
-            Assert.Equal(3, monkey3.NumberOfInspectedItems);
+            Assert.Equal(5, monkey3.NumberOfInspectedItems);
         }
 
         [Fact]

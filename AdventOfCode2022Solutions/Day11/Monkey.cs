@@ -5,37 +5,38 @@ namespace AdventOfCode2022Tests.Day11
     public class Monkey
     {
         public int Id { get; private set; }
-        public List<long> ItemValues => new(itemValues);
-
         public int NumberOfInspectedItems { get; internal set; } = 0;
+        public Condition Condition { get; private set; }
+        public IReadOnlyList<Item> Items => new List<Item>(items);
 
-        private readonly Operation operation;
-        private readonly Condition condition;
-        private Queue<long> itemValues = new();
+        private Queue<Item> items = new();
+        private Item currentInspectingItem;
+        private Operation operation;
 
-        public Monkey(Operation operation = null, Condition condition = null, int id = 0)
-        {
-            this.operation = operation;
-            this.condition = condition;
-            Id = id;
-        }
-
-        public void AddItem(long itemValue)
-        {
-            itemValues.Enqueue(itemValue);
-        }
-
-        public Item Throw()
+        public void InspectNextItem(bool valueReduced)
         {
             NumberOfInspectedItems++;
+            currentInspectingItem = items.Dequeue();
+            currentInspectingItem.Execute(operation);
+            if (valueReduced)
+            {
+                currentInspectingItem.Execute(new Division(3));
+            }
+        }
 
-            long itemValue = itemValues.Dequeue();
-            long newValue = (long)Math.Floor(operation.Execute(itemValue) / 3.0);
+        public int GetCurrentItemsDestMonkeyId()
+        {
+            return Condition.GetMonkeyIdToThrow(currentInspectingItem);
+        }
 
-            if (newValue % condition.DivisibleBy == 0)
-                return new Item(newValue, condition.TrueConditionMonkeyId);
-            else
-                return new Item(newValue, condition.FalseConditionMonkeyId);
+        public Item GetCurrentInspectingItem()
+        {
+            return currentInspectingItem;
+        }
+
+        public void AddItem(Item item)
+        {
+            items.Enqueue(item);
         }
 
         //"Monkey 0:\r\n  " +
@@ -45,31 +46,24 @@ namespace AdventOfCode2022Tests.Day11
         //"If true: throw to monkey 1\r\n    " +
         //"If false: throw to monkey 6\r\n";
 
-        public static Monkey Create(string monkeyInfo)
+        public static Monkey Create(string monkeyInfo, List<int> divisors)
         {
             string[] infos = monkeyInfo.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
             int id = GetId(infos[0]);
-            Queue<long> newMonkeyItemValues = GetItems(infos[1]);
             Operation operation = Operation.Create(infos[2]);
             Condition condition = Condition.Create(infos.TakeLast(3).ToArray());
-            return new(operation, condition, id) { itemValues = newMonkeyItemValues };
-        }
+            List<Item> items = Item.Create(infos[1]);
+            divisors.ForEach(d => items.ForEach(i => i.AddDivisor(d)));
 
-        private static Queue<long> GetItems(string line)
-        {
-            line = line.Replace("Starting items:", "");
-            line = line.Replace(",", "");
-
-            string[] parsedItemValues = line.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-
-            Queue<long> itemValues = new();
-
-            foreach (string parsedItemValue in parsedItemValues)
+            Monkey monkey = new()
             {
-                itemValues.Enqueue(int.Parse(parsedItemValue));
-            }
+                operation = operation,
+                Condition = condition,
+                Id = id,
+                items = new Queue<Item>(items)
+            };
 
-            return itemValues;
+            return monkey;
         }
 
         private static int GetId(string line)

@@ -1,14 +1,14 @@
 ﻿namespace AdventOfCode2022Solutions.Day11.Operations
 {
-    public class Multiplication : Operation
+    public class Division : Operation
     {
-        public Multiplication(int number) : base(number)
+        public Division(int number) : base(number)
         {
         }
 
         public override int Execute(int itemValue)
         {
-            return Number * itemValue;
+            return itemValue % Number;
         }
     }
 }

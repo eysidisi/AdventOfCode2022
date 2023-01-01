@@ -2,13 +2,14 @@
 
 namespace AdventOfCode2022Tests.Day11
 {
-    internal class Square : Operation
+    public class Square : Operation
     {
-        public Square()
+        public Square() : base(0)
         {
 
         }
-        public override long Execute(long itemValue)
+
+        public override int Execute(int itemValue)
         {
             return itemValue * itemValue;
         }

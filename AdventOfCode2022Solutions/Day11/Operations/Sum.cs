@@ -6,7 +6,7 @@ namespace AdventOfCode2022Tests.Day11
     {
         public Sum(int number) : base(number) { }
 
-        public override long Execute(long itemValue)
+        public override int Execute(int itemValue)
         {
             return Number + itemValue;
         }

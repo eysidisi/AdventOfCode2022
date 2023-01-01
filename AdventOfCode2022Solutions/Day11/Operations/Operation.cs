@@ -11,11 +11,6 @@ namespace AdventOfCode2022Solutions.Day11.Operations
             Number = number;
         }
 
-        protected Operation()
-        {
-
-        }
-
         public static Operation Create(string line)
         {
             string[] operationStrings = line.Split(" ", StringSplitOptions.RemoveEmptyEntries);
@@ -35,6 +30,6 @@ namespace AdventOfCode2022Solutions.Day11.Operations
             throw new ArgumentException("Unknown Argument!");
         }
 
-        abstract public long Execute(long itemValue);
+        abstract public int Execute(int itemValue);
     }
 }

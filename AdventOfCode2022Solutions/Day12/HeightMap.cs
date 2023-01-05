@@ -18,6 +18,11 @@
             ConnectNodesInColumns(numberOfRows, numberOfCols);
         }
 
+        public void MarkManyStartingPoints()
+        {
+            nodes.Where(n => n.Height == 0).ToList().ForEach(n => n.IsStartingNode = true);
+        }
+
         private void ConnectNodesInColumns(int numberOfRows, int numberOfCols)
         {
             for (int nodeIndex = 0; nodeIndex < (numberOfRows - 1) * numberOfCols; nodeIndex++)

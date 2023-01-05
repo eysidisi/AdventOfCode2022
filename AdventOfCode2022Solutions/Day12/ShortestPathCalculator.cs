@@ -25,12 +25,39 @@
             {
                 nodesToVisit.Enqueue(startingNode);
                 nodesToDistances.Add(startingNode, 0);
-                return VisitNode(ref startingNode);
+                return VisitNode(startingNode);
             }
         }
 
+        public int FindShortestPathWithMoreThanOneStartingPoint()
+        {
+            List<Node> startingNodes = Map.Nodes.Where(n => n.IsStartingNode).ToList();
 
-        private int VisitNode(ref Node currentNode)
+            int minDistance = int.MaxValue;
+
+            foreach (Node startingNode in startingNodes)
+            {
+                nodesToDistances = new();
+                nodesToVisit = new();
+
+                nodesToVisit.Enqueue(startingNode);
+                nodesToDistances.Add(startingNode, 0);
+                try
+                {
+                    int distance = VisitNode(startingNode);
+                    minDistance = Math.Min(minDistance, distance);
+                }
+                catch (Exception)
+                {
+
+                }
+
+            }
+
+            return minDistance;
+        }
+
+        private int VisitNode(Node currentNode)
         {
             int distanceToTheCurrentNode = nodesToDistances[currentNode];
 
@@ -56,8 +83,9 @@
                     throw new Exception("No path exist!");
                 }
 
-                return VisitNode(ref newNodeToVisit);
+                return VisitNode(newNodeToVisit);
             }
         }
+
     }
 }

@@ -2,10 +2,15 @@
 {
     public class ListComparer
     {
-        public bool CompareLists(string list1, string list2)
+        public bool? CompareLists(string list1, string list2)
         {
-            List<string> itemsInList1 = ListComparerHelpers.GetItemsInList(list1);
-            List<string> itemsInList2 = ListComparerHelpers.GetItemsInList(list2);
+            List<string> itemsInList1 = ListComparerHelper.GetItemsInList(list1);
+            List<string> itemsInList2 = ListComparerHelper.GetItemsInList(list2);
+
+            if (itemsInList1.Count() == 0 && itemsInList2.Count() == 0)
+            {
+                return null;
+            }
 
             if (itemsInList1.Count() == 0)
             {
@@ -36,7 +41,12 @@
                 return result.Value;
             }
 
-            return true;
+            if (itemsInList2.Count() > itemsInList1.Count())
+            {
+                return true;
+            }
+
+            return null;
         }
 
         private bool? CompareItems(string item1, string item2)
@@ -48,21 +58,15 @@
 
             else if (IsList(item1))
             {
-                int numOfItemsInList = ListComparerHelpers.CalculateNumberOfItemsInList(item1);
                 int number = int.Parse(item2);
-                string createdList2 = ListComparerHelpers.CreateListFromNumber(number, numOfItemsInList);
+                string createdList2 = $"[{number}]";
                 return CompareLists(item1, createdList2);
             }
 
             else if (IsList(item2))
             {
-                int numberOfItems = ListComparerHelpers.CalculateNumberOfItemsInList(item2);
-                if (numberOfItems == 0)
-                {
-                    return false;
-                }
                 int number = int.Parse(item1);
-                string createdList1 = ListComparerHelpers.CreateListFromNumber(number, numberOfItems);
+                string createdList1 = $"[{number}]";
                 return CompareLists(createdList1, item2);
             }
 

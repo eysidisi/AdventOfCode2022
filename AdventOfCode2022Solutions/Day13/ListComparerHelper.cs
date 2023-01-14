@@ -1,4 +1,4 @@
-﻿internal static class ListComparerHelpers
+﻿public static class ListComparerHelper
 {
     public static List<string> GetItemsInList(string list)
     {
@@ -98,19 +98,6 @@
         }
 
         return numberOfElements;
-    }
-
-    public static string CreateListFromNumber(int firstNum, int numberOfElements)
-    {
-        string newList2 = "[" + string.Join(",", Enumerable.Repeat(firstNum, numberOfElements));
-
-        newList2 += "]";
-        return newList2;
-    }
-
-    public static bool ItemIsList(string item)
-    {
-        return item[0] == '[';
     }
 
     public static string RemoveParanthesis(string str)

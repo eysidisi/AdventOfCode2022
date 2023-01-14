@@ -15,7 +15,7 @@ namespace AdventOfCode2022Tests.Day13
         [InlineData("[]", 0)]
         public void ReturnNumberOfItemsRecursiveLists(string input, int expectedNumberOfITems)
         {
-            int actualNumberOfItems = ListComparerHelpers.CalculateNumberOfItemsInList(input);
+            int actualNumberOfItems = ListComparerHelper.CalculateNumberOfItemsInList(input);
 
             Assert.Equal(expectedNumberOfITems, actualNumberOfItems);
         }
@@ -24,7 +24,7 @@ namespace AdventOfCode2022Tests.Day13
         [ClassData(typeof(CalculatorTestData))]
         public void GetItemsInList(string input, List<string> expectedItems)
         {
-            List<string> actualItems = ListComparerHelpers.GetItemsInList(input);
+            List<string> actualItems = ListComparerHelper.GetItemsInList(input);
 
             actualItems.Should().BeEquivalentTo(expectedItems);
         }

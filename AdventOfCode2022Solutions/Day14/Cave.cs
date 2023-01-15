@@ -1,18 +1,23 @@
-﻿using System.Runtime.Serialization;
-
-namespace AdventOfCode2022Tests.Day14
+﻿namespace AdventOfCode2022Tests.Day14
 {
     public class Cave
     {
-        HashSet<Coord> rocks = new();
-        HashSet<Coord> sands = new();
+        private readonly Coord SandStartingCoord = new(500, 0);
+        private readonly int MaxDepth;
 
-        public bool HasRock(int xCoord, int yCoord)
+        HashSet<Coord> rockCoords = new();
+        HashSet<Coord> sandCoords = new();
+
+        private readonly bool hasFloor;
+
+        public Cave(string input, bool hasFloor = false)
         {
-            return rocks.Contains(new Coord(xCoord, yCoord));
+            this.hasFloor = hasFloor;
+            CreateRocks(input);
+            MaxDepth = hasFloor ? rockCoords.Max(r => r.Y) + 2 : rockCoords.Max(r => r.Y);
         }
 
-        public void ParseInput(string input)
+        private void CreateRocks(string input)
         {
             input = input.Replace(" ", "");
 
@@ -21,6 +26,102 @@ namespace AdventOfCode2022Tests.Day14
             foreach (string line in lines)
             {
                 ParseLineAndAddRocks(line);
+            }
+        }
+
+        public bool HasRock(int xCoord, int yCoord)
+        {
+            if (hasFloor && yCoord >= MaxDepth)
+            {
+                return true;
+            }
+
+            return rockCoords.Contains(new Coord(xCoord, yCoord));
+        }
+
+        private bool HasRock(Coord coord)
+        {
+            return HasRock(coord.X, coord.Y);
+        }
+
+        public bool HasSand(int x, int y)
+        {
+            return sandCoords.Contains(new Coord(x, y));
+        }
+
+        public int FindNumberOfSandsThatCanRest()
+        {
+            while (true)
+            {
+                try
+                {
+                    DropOneSand();
+                }
+                catch (SandGoingToVoidException)
+                {
+                    break;
+                }
+            }
+            return sandCoords.Count();
+        }
+
+        public int FindNumberOfSandsToBlockSource()
+        {
+            while (true)
+            {
+                try
+                {
+                    DropOneSand();
+                }
+                catch (SandSourceBlockedException)
+                {
+                    break;
+                }
+            }
+            return sandCoords.Count();
+        }
+
+        public void DropOneSand()
+        {
+            Coord sandCurrentCoord = SandStartingCoord;
+            while (true)
+            {
+                Coord downOne = new(sandCurrentCoord.X, sandCurrentCoord.Y + 1);
+                Coord leftOneDownOne = new(sandCurrentCoord.X - 1, sandCurrentCoord.Y + 1);
+                Coord rightOneDownOne = new(sandCurrentCoord.X + 1, sandCurrentCoord.Y + 1);
+
+                if (hasFloor == false && sandCurrentCoord.Y >= MaxDepth)
+                {
+                    throw new SandGoingToVoidException("Sands started going into the void");
+                }
+
+                Coord sandNextCoord;
+                if (HasRock(downOne) == false && sandCoords.Contains(downOne) == false)
+                {
+                    sandNextCoord = downOne;
+                }
+
+                else if (HasRock(leftOneDownOne) == false && sandCoords.Contains(leftOneDownOne) == false)
+                {
+                    sandNextCoord = leftOneDownOne;
+                }
+
+                else if (HasRock(rightOneDownOne) == false && sandCoords.Contains(rightOneDownOne) == false)
+                {
+                    sandNextCoord = rightOneDownOne;
+                }
+
+                else
+                    break;
+
+                sandCurrentCoord = sandNextCoord;
+            }
+
+            sandCoords.Add(sandCurrentCoord);
+
+            if (sandCurrentCoord == SandStartingCoord)
+            {
+                throw new SandSourceBlockedException();
             }
         }
 
@@ -45,7 +146,7 @@ namespace AdventOfCode2022Tests.Day14
                     yCoord <= Math.Max(startingCoord.Y, endingCoord.Y);
                     yCoord++)
                 {
-                    rocks.Add(new Coord(startingCoord.X, yCoord));
+                    rockCoords.Add(new Coord(startingCoord.X, yCoord));
                 }
             }
 
@@ -55,11 +156,10 @@ namespace AdventOfCode2022Tests.Day14
                     xCoord <= Math.Max(startingCoord.X, endingCoord.X);
                     xCoord++)
                 {
-                    rocks.Add(new Coord(xCoord, startingCoord.Y));
+                    rockCoords.Add(new Coord(xCoord, startingCoord.Y));
                 }
             }
         }
-
         private Coord CreateCoordinate(string coord)
         {
             int x = int.Parse(coord.Split(",")[0]);
@@ -67,122 +167,5 @@ namespace AdventOfCode2022Tests.Day14
 
             return new Coord(x, y);
         }
-
-        public void DropOneSand()
-        {
-            Coord sandCurrentCoord = new(500, 0);
-            int maxDepth = rocks.Max(r => r.Y);
-
-            while (true)
-            {
-                Coord downOne = new(sandCurrentCoord.X, sandCurrentCoord.Y + 1);
-                Coord leftOneDownOne = new(sandCurrentCoord.X - 1, sandCurrentCoord.Y + 1);
-                Coord rightOneDownOne = new(sandCurrentCoord.X + 1, sandCurrentCoord.Y + 1);
-
-                Coord sandNextCoord;
-
-                if (sandCurrentCoord.Y >= maxDepth)
-                {
-                    throw new SandException("Sands started going into the void");
-                }
-
-                if (rocks.Contains(downOne) == false && sands.Contains(downOne) == false)
-                {
-                    sandNextCoord = downOne;
-                }
-
-                else if (rocks.Contains(leftOneDownOne) == false && sands.Contains(leftOneDownOne) == false)
-                {
-                    sandNextCoord = leftOneDownOne;
-                }
-
-                else if (rocks.Contains(rightOneDownOne) == false && sands.Contains(rightOneDownOne) == false)
-                {
-                    sandNextCoord = rightOneDownOne;
-                }
-
-                else
-                    break;
-
-                sandCurrentCoord = sandNextCoord;
-            }
-
-            sands.Add(sandCurrentCoord);
-        }
-
-        public bool HasSand(int x, int y)
-        {
-            return sands.Contains(new Coord(x, y));
-        }
-
-        public int FindNumberOfSandsThatCanRest()
-        {
-            int numberOfSands = 0;
-
-            while (true)
-            {
-                try
-                {
-                    DropOneSand();
-                    numberOfSands++;
-                }
-                catch (SandException)
-                {
-                    break;
-                }
-            }
-            return numberOfSands;
-        }
-    }
-
-    public class Coord
-    {
-        public Coord(int xCoord, int yCoord)
-        {
-            X = xCoord;
-            Y = yCoord;
-        }
-
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        // override object.Equals
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
-
-            Coord other = (Coord)(obj);
-
-            return X == other.X && Y == other.Y;
-        }
-
-        // override object.GetHashCode
-        public override int GetHashCode()
-        {
-            return X.GetHashCode() ^ Y.GetHashCode();
-        }
-    }
-}
-
-[Serializable]
-internal class SandException : Exception
-{
-    public SandException()
-    {
-    }
-
-    public SandException(string? message) : base(message)
-    {
-    }
-
-    public SandException(string? message, Exception? innerException) : base(message, innerException)
-    {
-    }
-
-    protected SandException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
     }
 }

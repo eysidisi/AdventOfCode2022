@@ -9,9 +9,7 @@ namespace AdventOfCode2022Tests.Day14
         {
             string input = "498,4-> 498,6";
 
-            Cave cave = new();
-
-            cave.ParseInput(input);
+            Cave cave = new(input);
 
             Assert.True(cave.HasRock(498, 4));
             Assert.True(cave.HasRock(498, 5));
@@ -25,17 +23,13 @@ namespace AdventOfCode2022Tests.Day14
         public void ParseOneLineMoreThanTwoCoordinates()
         {
             string input = "498,4-> 498,3-> 495,3";
-
-            Cave cave = new();
-
-            cave.ParseInput(input);
+            Cave cave = new(input);
 
             Assert.True(cave.HasRock(498, 4));
             Assert.True(cave.HasRock(498, 3));
             Assert.True(cave.HasRock(497, 3));
             Assert.True(cave.HasRock(496, 3));
             Assert.True(cave.HasRock(495, 3));
-
 
             Assert.False(cave.HasRock(494, 3));
             Assert.False(cave.HasRock(495, 2));
@@ -47,8 +41,7 @@ namespace AdventOfCode2022Tests.Day14
             string input = "498,4 -> 498,6 -> 496,6\r\n" +
                 "503,4 -> 502,4 -> 502,9 -> 494,9";
 
-            Cave cave = new();
-            cave.ParseInput(input);
+            Cave cave = new(input);
 
             Assert.True(cave.HasRock(498, 4));
             Assert.True(cave.HasRock(498, 5));
@@ -80,8 +73,7 @@ namespace AdventOfCode2022Tests.Day14
             string input = "498,4 -> 498,6 -> 496,6\r\n" +
                 "503,4 -> 502,4 -> 502,9 -> 494,9";
 
-            Cave cave = new();
-            cave.ParseInput(input);
+            Cave cave = new(input);
 
             int numOfSands = 24;
 
@@ -129,8 +121,7 @@ namespace AdventOfCode2022Tests.Day14
             string input = "498,4 -> 498,6 -> 496,6\r\n" +
                 "503,4 -> 502,4 -> 502,9 -> 494,9";
 
-            Cave cave = new();
-            cave.ParseInput(input);
+            Cave cave = new(input);
 
             int expedtedNumberOfSands = 24;
 
@@ -145,8 +136,7 @@ namespace AdventOfCode2022Tests.Day14
             string inputPath = @"TestFiles/Day14/ExerciseInput.txt";
             string input = File.ReadAllText(inputPath);
 
-            Cave cave = new();
-            cave.ParseInput(input);
+            Cave cave = new(input);
 
             int expedtedNumberOfSands = 674;
 

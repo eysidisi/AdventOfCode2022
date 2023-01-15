@@ -94,6 +94,9 @@
     <None Update="TestFiles\Day10\ExerciseInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Day14\ExerciseInput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Day13\ExerciseInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

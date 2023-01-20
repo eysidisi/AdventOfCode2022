@@ -63,8 +63,8 @@ namespace AdventOfCode2022Tests.Day15
 
             Zone zone = new(input);
 
-            Assert.Equal(25, zone.HowManyCellsAreBlockedInRow(9));
             Assert.Equal(26, zone.HowManyCellsAreBlockedInRow(10));
+            Assert.Equal(25, zone.HowManyCellsAreBlockedInRow(9));
             Assert.Equal(27, zone.HowManyCellsAreBlockedInRow(11));
         }
 
